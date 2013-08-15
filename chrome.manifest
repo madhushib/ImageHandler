@@ -1,0 +1,8 @@
+content  imagehandler               chrome/content/
+skin     imagehandler classic/1.0   chrome/skin/classic/
+locale   imagehandler en-US         chrome/locale/en-US/
+resource imagehandler               modules/
+
+overlay chrome://browser/content/browser.xul        chrome://imagehandler/content/ipOverlay.xul
+overlay chrome://navigator/content/navigator.xul    chrome://imagehandler/content/ipOverlay.xul
+style   chrome://global/content/customizeToolbar.xul    chrome://imagehandler/skin/ip.css
