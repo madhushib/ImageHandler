@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://imagehandler/skin/ip.css" type="text/css"?>
+
+<!DOCTYPE overlay SYSTEM "chrome://imagehandler/locale/ImageHandler.dtd">
+
+<prefwindow id="imagehandler-prefs" title="&options_dialog.title;"
+     xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+     buttons="accept,cancel,extra2"
+     buttonlabelextra2="&pref_button_extra2_label;"
+     onload="ImageHandlerChrome.Options.onLoad();"
+     ondialogaccept="ImageHandlerChrome.Options.onDialogAccept();"
+     onunload="ImageHandlerChrome.Options.onDialogClose();"
+     ondialogextra2="ImageHandlerChrome.Options.restoreAll();"
+     persist="lastSelected screenX screenY">
+    <prefpane id="paneGeneral" label="&pref_paneGeneral.label;" image="chrome://imagehandler/skin/option-general32.png">
+      <preferences>
+        <preference id="pref-createdFolderByTitle" name="extensions.imagehandler.createdFolderByTitle" type="bool" />
+        <preference id="pref-showSubfolderNameConfirmationPopup" name="extensions.imagehandler.showSubfolderNameConfirmationPopup" type="bool" />
+        <preference id="pref-removeTextFromTitle" name="extensions.imagehandler.removeTextFromTitle" type="unichar"/>
+        <preference id="pref-renameImageBySequenceNum" name="extensions.imagehandler.renameImageBySequenceNum" type="bool" />
+        <preference id="pref-openExplorerAfterSaved" name="extensions.imagehandler.openExplorerAfterSaved" type="bool" />
+        <preference id="pref-openDownloadManagerAfterSaved" name="extensions.imagehandler.openDownloadManagerAfterSaved" type="bool" />
+        <preference id="pref-closeImageHandlerAfterSaved" name="extensions.imagehandler.closeImageHandlerAfterSaved" type="bool" />
+        <preference id="pref-closeBrowserTabAfterSaved" name="extensions.imagehandler.closeBrowserTabAfterSaved" type="bool" />
+      </preferences>
+      <vbox>
+            <groupbox>
+                <caption label="&pref_after_saved_behavior.label;" />
+                <checkbox label="&pref_open_explorer_after_saved.label;" preference="pref-openExplorerAfterSaved" />
+                <checkbox label="&pref_open_download_manager_after_saved.label;" preference="pref-openDownloadManagerAfterSaved" id="downloadManagerPrefCheckbox"/>
+                <checkbox label="&pref_close_image_picker_after_saved.label;" preference="pref-closeImageHandlerAfterSaved" />
+                <checkbox label="&pref_close_browser_tab_after_saved.label;" preference="pref-closeBrowserTabAfterSaved" />
+            </groupbox>
+            <groupbox>
+                <caption label="&pref_folder_creation.label;" />
+                <checkbox label="&pref_created_folder_by_title.label;" preference="pref-createdFolderByTitle"
+                          oncommand="ImageHandlerChrome.Options.selectCreatedFolderByTitle(event);"/>
+                <checkbox label="&pref_show_folder_name_confirmation.label;" preference="pref-showSubfolderNameConfirmationPopup"
+                          id="showSubfolderNameConfirmationPopupCheckbox"/>
+            </groupbox>
+            <groupbox>
+                 <caption label="&pref_file_creation.label;" />
+                 <checkbox label="&pref_rename_image_by_sequence_num.label;" preference="pref-renameImageBySequenceNum"
+                           tooltiptext="&pref_rename_image_by_sequence_num.tooltip;"/>
+            </groupbox>
+      </vbox>
+      <vbox>
+      	<groupbox>
+                <caption label="&pref_mouse_behavior.label;" tooltiptext="&pref_mouse_behavior.tooltip;"/>
+                <label value="&pref_mouse_behavior.tooltip;"/>
+                <checkbox label="&pref_collector_doubleclick_image_to_save.label;" preference="pref-collectorDoubleclickImageToSaveEnable" />
+                <checkbox label="&pref_collector_drag_image_to_save.label;" preference="pref-collectorDragImageToSaveEnable" />
+            </groupbox>
+      </vbox>
+    </prefpane>
+    
+    <script type="application/x-javascript" src="common.js" />
+    <script type="application/x-javascript" src="options.js" />
+</prefwindow>
