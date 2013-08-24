@@ -35,5 +35,96 @@ ImageHandlerChrome.Options = {
         }
     },
 
-    
+    _splitTitle : function(windowTitle) {
+
+        var results = new Array();
+
+        if (windowTitle != null && windowTitle != "") {
+
+            var headTexts = new Array();
+            var tailTexts = new Array();
+
+            var separatorRE = /\t|-|_|\|/g;
+            var result = separatorRE.exec(windowTitle);
+            while (result != null) {
+                var hText = windowTitle.substring(0, separatorRE.lastIndex);
+                headTexts.push(hText);
+
+                var tText = windowTitle.substring(result.index);
+                tailTexts.push(tText);
+
+                result = separatorRE.exec(windowTitle);
+            }
+
+            results = headTexts.concat(tailTexts);
+        }
+
+        return results;
+    },
+
+
+    enableOrDisableRemoveTextElements : function(enable) {
+
+        var showSubfolderNameConfirmationPopupCheckbox = document
+                .getElementById("showSubfolderNameConfirmationPopupCheckbox");
+        var removeTextMenulist = document.getElementById("removeTextMenulist");
+        var removeTextTB = document.getElementById("removeTextTB");
+        var removeTextBtn = document.getElementById("removeTextBtn");
+
+        if (enable) {
+            showSubfolderNameConfirmationPopupCheckbox.disabled = false;
+            removeTextMenulist.disabled = false;
+            removeTextTB.disabled = false;
+            removeTextBtn.disabled = false;
+        } else {
+            showSubfolderNameConfirmationPopupCheckbox.disabled = true;
+            showSubfolderNameConfirmationPopupCheckbox.checked = false;
+            removeTextMenulist.disabled = true;
+            removeTextTB.disabled = true;
+            removeTextBtn.disabled = true;
+        }
+    },
+
+    restoreAll : function() {
+
+        var appInfo = Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULAppInfo);
+        var versionChecker = Components.classes["@mozilla.org/xpcom/version-comparator;1"]
+                       .getService(Components.interfaces.nsIVersionComparator);
+        var isUnderV6 = versionChecker.compare(appInfo.version, "6") < 0;
+
+        // restore
+        var preferences = document.getElementsByTagName("preference");
+
+        for ( var i = 0; i < preferences.length; i++) {
+            ImageHandler.Logger.info("preference:" + preferences[i].id + ", hasUserValue = "
+                    + preferences[i].hasUserValue);
+            if(!isUnderV6 || preferences[i].hasUserValue){
+                preferences[i].reset(); // preference.reset()
+            }
+        }
+
+        // Restore RemoveText Elements
+        this.enableOrDisableRemoveTextElements(true);
+    },
+
+    onDialogAccept : function() {
+        ImageHandler.Logger.debug("Installing button...");
+
+        var buttonNames = [ "ipbutton-simple", "ipbutton-all", "ipbutton-left", "ipbutton-right", "ipbuttons" ];
+        buttonNames.forEach(function(buttonName) {
+            var buttonId = buttonName + "-toolbar";
+            var isShow = ImageHandler.Settings.isShowOnToolbar(buttonName);
+            ImageHandlerChrome.installButton("nav-bar", buttonId, isShow);
+            ImageHandler.Logger.debug("Installed button: " + buttonId + " to toolbar, isShow=" + isShow);
+        });
+    },
+
+    onDialogClose : function() {
+        var prefWindow = document.getElementById("imagehandler-prefs");
+        ImageHandler.Logger.debug("onDialogClose, prefWindow=" + prefWindow);
+        if(prefWindow.instantApply){
+            ImageHandler.Logger.debug("Call onDialogAccept() when instantApply is on.");
+            this.onDialogAccept();
+        }
+    }
 }
