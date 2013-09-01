@@ -1,0 +1,30 @@
+<!ENTITY toolbarbutton_pick_images.label "Pick Images">
+<!ENTITY toolbarbutton_pick_images.tooltip "Pick Images">
+<!ENTITY toolbarbutton_pick_images_simple.label "Pick Images">
+<!ENTITY toolbarbutton_pick_images_simple.tooltip "Pick images from current tab">
+<!ENTITY toolbarbutton_pick_images.menuitem.currenttab "Pick images from current tab">
+<!ENTITY toolbarbutton_pick_images.menuitem.alltabs "Pick images from all tabs">
+<!ENTITY toolbarbutton_pick_images.menuitem.righttabs "Pick images from right tabs">
+<!ENTITY toolbarbutton_pick_images.menuitem.lefttabs "Pick images from left tabs">
+
+<!ENTITY menu_pick_images.label "Pick Images">
+
+<!ENTITY options_dialog.title "Image Picker preferences" >
+<!ENTITY pref_button_extra2_label "Restore Default Settings">
+
+<!ENTITY pref_folder_creation.label "Folder Creation">
+<!ENTITY pref_created_folder_by_title.label "Create saved folder by title">
+<!ENTITY pref_show_folder_name_confirmation.label "Show saved folder name confirmation popup">
+<!ENTITY pref_remove_text_from_title_textbox.label "Remove the following text from title">
+<!ENTITY pref_remove_text_from_title_menulist.label "Remove text:">
+<!ENTITY pref_remove_text_from_title_button.label "Add">
+<!ENTITY pref_remove_text_from_title_button.tooltip "add text to be remove from title">
+
+
+
+
+
+
+
+
+
