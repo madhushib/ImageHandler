@@ -20,9 +20,28 @@
 <!ENTITY pref_remove_text_from_title_button.label "Add">
 <!ENTITY pref_remove_text_from_title_button.tooltip "add text to be remove from title">
 
+<!ENTITY pref_file_creation.label "File Creation">
+<!ENTITY pref_rename_image_by_sequence_num.label "Rename image by sequence number">
+<!ENTITY pref_rename_image_by_sequence_num.tooltip "e.g. 001.jpg, 002.jpg, 003.jpg, ...">
 
+<!ENTITY pref_after_saved_behavior.label "After saved">
+<!ENTITY pref_open_explorer_after_saved.label "Open Explorer automatically">
+<!ENTITY pref_open_download_manager_after_saved.label "Open Download Manager automatically">
+<!ENTITY pref_close_image_picker_after_saved.label "Close Image Picker automatically">
+<!ENTITY pref_close_browser_tab_after_saved.label "Close Browser Tab automatically">
+<!ENTITY pref_notes.label "NOTE: You must re-open the Image Picker dialog for the changes to take effect">
 
+<!ENTITY pref_paneGeneral.label "General">
+<!ENTITY pref_paneUI.label "UI &amp; Mouse">
 
+<!ENTITY pref_ui.label "UI">
+<!ENTITY pref_show_on_toolbar.label "Show on Toolbar">
+<!ENTITY pref_show_on_contextmenu.label "Show on Context Menu">
+
+<!ENTITY pref_mouse_behavior.label "Mouse">
+<!ENTITY pref_mouse_behavior.tooltip "Save image quickly when browsing">
+<!ENTITY pref_collector_doubleclick_image_to_save.label "Double click to save image">
+<!ENTITY pref_collector_drag_image_to_save.label "Drag image to save image">
 
 
 
