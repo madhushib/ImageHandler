@@ -44,6 +44,43 @@
 <!ENTITY pref_collector_drag_image_to_save.label "Drag image to save image">
 
 
+<!ENTITY pick_window.title "Pick Images">
+<!ENTITY pick_size_limits.label "Size limits">
+<!ENTITY pick_min_size.label "Min size">
+<!ENTITY pick_min_width.label "Min width">
+<!ENTITY pick_min_height.label "Min height">
+<!ENTITY pick_image_types.label "Image types">
+<!ENTITY pick_button_filter.label "Filter">
+<!ENTITY pick_button_filter.tooltip "Filter images by Site limits and Image types">
+<!ENTITY pick_button_showall.label "Show All">
+<!ENTITY pick_button_showall.tooltip "Show all images without Site limits and Image types limits">
+<!ENTITY pick_button_view.label "View">
+<!ENTITY pick_menu_thumbnails_small.label "Thumbnails(Small)">
+<!ENTITY pick_menu_thumbnails_normal.label "Thumbnails(Normal)">
+<!ENTITY pick_menu_thumbnails_large.label "Thumbnails(Large)">
+<!ENTITY pick_menu_show_image_size.label "Show Image Size">
+<!ENTITY pick_menu_show_image_name.label "Show Image Name">
+<!ENTITY pick_saved_directory.label "Saved Directory">
+<!ENTITY pick_clear_saved_directories.label "Clear all directories">
+<!ENTITY pick_browse.tooltip "Browse...">
+<!ENTITY pick_button_save.label "Save">
+<!ENTITY pick_button_save.tooltip "Save selected images">
+<!ENTITY pick_button_close.label "Close">
+<!ENTITY download_progress.tooltip "Open Download Manager">
+<!ENTITY configure_button.label "Configure">
+<!ENTITY configure_button.tooltip "Configure">
+<!ENTITY about_button.tooltip "About Image Picker">
 
+<!ENTITY pick_contex_menu_select_similar.label "Select Similar">
+<!ENTITY pick_contex_menu_select_all.label "Select All">
+<!ENTITY pick_contex_menu_unselect_all.label "Unselect All">
 
+<!ENTITY folder_confirmation_dialog.title "Saved folder name confirmation">
+<!ENTITY folder_confirmation_dialog.label "Please select or input folder name for saving">
 
+<!ENTITY about_dialog.title "About Image Handler">
+<!ENTITY about_extension_name.label "Image Handler">
+<!ENTITY about_extension_desc.label "Extract, manage and save multiple image contents from tabs">
+<!ENTITY about_version.label "Version">
+<!ENTITY about_creator.label "Creator">
+<!ENTITY about_homepage.label "Home page">
