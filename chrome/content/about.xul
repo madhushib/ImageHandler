@@ -12,6 +12,14 @@
     <vbox id="clientBox" flex="1">
         <label id="extensionName" crop="right" value="&about_extension_name.label;" />
         <label id="extensionVersion" crop="right" value="&about_version.label; 1.0" />
+        <description id="extensionDescription" class="boxIndent">
+            &about_extension_desc.label;
+        </description>
+        <label id="extensionCreatorLabel" class="sectionTitle">&about_creator.label;</label>
+        <hbox id="creatorBox" class="boxIndent">
+            <label id="extensionCreator" flex="1" crop="right" value="Madhushi Bandara" />
+            <image src="chrome://imagehandler/skin/madhu.jpg"/>
+        </hbox>
     </vbox>
     <separator id="groove" class="groove" />
 </dialog>
