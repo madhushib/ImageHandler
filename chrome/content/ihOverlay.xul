@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://imagehandler/skin/ip.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://imagehandler/locale/ImageHandler.dtd">
+
+<overlay id="ihOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <script type="application/x-javascript" src="chrome://imagehandler/content/common.js" />
+    <script type="application/x-javascript" src="chrome://imagehandler/content/images.js" />
+    <script type="application/x-javascript" src="chrome://imagehandler/content/ihOverlay.js" />
+    <script type="application/x-javascript" src="chrome://imagehandler/content/notification.js" />
+    <script type="application/x-javascript" src="chrome://imagehandler/content/collector.js" />
+
+    <stringbundleset id="stringbundleset">
+        <stringbundle id="ip-string-bundle" src="chrome://imagehandler/locale/ImageHandler.properties" />
+    </stringbundleset>
+
+    <toolbarpalette id="BrowserToolbarPalette">
+        <toolbarbutton id="ipbuttons-toolbar" class="toolbarbutton-1 ip-buttons" type="menu-button"
+            label="&toolbarbutton_pick_images.label;" tooltiptext="&toolbarbutton_pick_images.tooltip;" oncommand="ImageHandlerChrome.pickImagesFromCurrentTab(event);">
+            <menupopup id="image-pick-button-popup" onpopupshowing="ImageHandlerChrome.onPopupMenuShowing(event);">
+                <menuitem id="ipbtn-menuall" label="&toolbarbutton_pick_images.menuitem.alltabs;" oncommand="ImageHandlerChrome.pickImagesFromAllTabs(event);"
+                    class="menuitem-iconic ip-button-all" />
+                <menuseparator id="ipbtn-menuseparator" />
+                <menuitem id="ipbtn-menu-configure" label="&configure_button.label;" oncommand="ImageHandlerChrome.openOptionsDialog(event);"
+                    class="menuitem-iconic configure-menu-item" />
+                <menuitem id="ipbtn-menu-configure-doubleclick-save" label="&pref_collector_doubleclick_image_to_save.label;"
+                    oncommand="ImageHandlerChrome.enableOrDisablePref(event, 'collector.doubleclickImageToSave.enable');"
+                    class="menuitem-iconic" type="checkbox"/>
+                <menuitem id="ipbtn-menu-configure-drap-save" label="&pref_collector_drag_image_to_save.label;"
+                    oncommand="ImageHandlerChrome.enableOrDisablePref(event, 'collector.dragImageToSave.enable');"
+                    class="menuitem-iconic" type="checkbox"/>
+            </menupopup>
+        </toolbarbutton>
+    </toolbarpalette>
+
+</overlay>
