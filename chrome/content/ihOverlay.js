@@ -66,7 +66,20 @@ ImageHandlerChrome.getFormattedString = function(key, parameters){
     return stringsBundle.getFormattedString(key, parameters);
 };
 
+ImageHandlerChrome.pickImagesFromCurrentTab = function(event){
 
+    event.stopPropagation();
+
+    // Collect current tab
+    var currentTab = ImageHandlerChrome.getCurrentTab();
+    var tabs = [currentTab]
+
+    // Get document title
+    var currentTabTitle = ImageHandlerChrome.getCurrentBrowser().contentDocument.title;
+
+    // Pick image
+    ImageHandlerChrome.pickImages(tabs, currentTabTitle);
+};
 
 ImageHandlerChrome.pickImagesFromAllTabs = function(event){
 
@@ -111,7 +124,52 @@ ImageHandlerChrome.pickImagesFromTabs = function(event, tabTitle){
  * @param {String}
  *            title
  */
+ImageHandlerChrome.pickImages = function(tabs, title){
 
+    // init cache session
+    var cacheService = Cc["@mozilla.org/network/cache-service;1"].getService(Ci.nsICacheService);
+    ImageHandlerChrome.httpCacheSession = cacheService.createSession("HTTP", Ci.nsICache.STORE_ANYWHERE, Ci.nsICache.STREAM_BASED);
+    ImageHandlerChrome.httpCacheSession.doomEntriesIfExpired = false;
+
+    // Get images from all given tabs
+    var imageInfoList = new Array();
+    tabs.forEach(function(tab){
+        ImageHandler.Logger.debug("handling tab = " + tab);
+        var browser = gBrowser.getBrowserForTab(tab);
+        var contentWindow = browser.contentWindow;
+
+        var documentList = ImageHandlerChrome.getDocumentList(contentWindow);
+        for (var i = 0; i < documentList.length; i++) {
+            // handle current document
+            var currentDocument = documentList[i];
+            var currentImageList = new Array();
+            var documentImageList = currentDocument.getElementsByTagName('img');
+            for (var j = 0; j < documentImageList.length; j++) {
+                var image = documentImageList[j];
+                if (image.src != null && image.src != "") {
+                    currentImageList.push(image);
+                }
+            }
+            ImageHandler.Logger.info("document = " + currentDocument.title + ", images = " + currentImageList.length);
+
+            imageInfoList = imageInfoList.concat(ImageHandlerChrome.convertAndTidyImage(currentImageList));
+        }// end for each document
+    });
+
+    // Collect tabs to be closed after saved images
+    var listeners = [new ImageHandlerChrome.CloseTabListener(tabs)];
+
+    // Prepare parameters
+    var params = {
+        "imageList": imageInfoList,
+        "title": title,
+        "listeners": listeners,
+        "browser": gBrowser.selectedBrowser,
+        "popupNotifications": PopupNotifications
+    };
+    var mainWindow = window.openDialog("chrome://imagehandler/content/pick.xul", "PickImage.mainWindow", "chrome,centerscreen,resizable, dialog=no, modal=no, dependent=no,status=yes", params);
+    mainWindow.focus();
+};
 
 ImageHandlerChrome.getDocumentList = function(frame){
 
@@ -331,52 +389,6 @@ ImageHandlerChrome.onPopupMenuShowing = function(event){
     	menuPopup.insertBefore(separator, configureMenuitem);
     }
 };
-ImageHandlerChrome.pickImages = function(tabs, title){
-
-    // init cache session
-    var cacheService = Cc["@mozilla.org/network/cache-service;1"].getService(Ci.nsICacheService);
-    ImageHandlerChrome.httpCacheSession = cacheService.createSession("HTTP", Ci.nsICache.STORE_ANYWHERE, Ci.nsICache.STREAM_BASED);
-    ImageHandlerChrome.httpCacheSession.doomEntriesIfExpired = false;
-
-    // Get images from all given tabs
-    var imageInfoList = new Array();
-    tabs.forEach(function(tab){
-        ImageHandler.Logger.debug("handling tab = " + tab);
-        var browser = gBrowser.getBrowserForTab(tab);
-        var contentWindow = browser.contentWindow;
-
-        var documentList = ImageHandlerChrome.getDocumentList(contentWindow);
-        for (var i = 0; i < documentList.length; i++) {
-            // handle current document
-            var currentDocument = documentList[i];
-            var currentImageList = new Array();
-            var documentImageList = currentDocument.getElementsByTagName('img');
-            for (var j = 0; j < documentImageList.length; j++) {
-                var image = documentImageList[j];
-                if (image.src != null && image.src != "") {
-                    currentImageList.push(image);
-                }
-            }
-            ImageHandler.Logger.info("document = " + currentDocument.title + ", images = " + currentImageList.length);
-
-            imageInfoList = imageInfoList.concat(ImageHandlerChrome.convertAndTidyImage(currentImageList));
-        }// end for each document
-    });
-
-    // Collect tabs to be closed after saved images
-    var listeners = [new ImageHandlerChrome.CloseTabListener(tabs)];
-
-    // Prepare parameters
-    var params = {
-        "imageList": imageInfoList,
-        "title": title,
-        "listeners": listeners,
-        "browser": gBrowser.selectedBrowser,
-        "popupNotifications": PopupNotifications
-    };
-    var mainWindow = window.openDialog("chrome://imagehandler/content/pick.xul", "PickImage.mainWindow", "chrome,centerscreen,resizable, dialog=no, modal=no, dependent=no,status=yes", params);
-    mainWindow.focus();
-};
 
 ImageHandlerChrome.enableOrDisablePref = function(event, prefName){
     event.stopPropagation();
@@ -399,4 +411,25 @@ ImageHandlerChrome.CloseTabListener = function(tabs) {
     this.tabs = tabs;
 };
 
+ImageHandlerChrome.CloseTabListener.prototype = {
 
+    afterSavedImages: function(savedFolder, images){
+
+        ImageHandler.Logger.debug("Closing tabs...");
+
+        if (this.tabs && ImageHandler.Settings.isCloseBrowserTabAfterSaved()) {
+
+            // Create a blank tab if close all tabs to avoid Firefox is closed.
+            if(this.tabs.length == gBrowser.tabContainer.childNodes.length){
+                gBrowser.addTab("about:blank");
+            }
+
+            // Close all tabs
+            this.tabs.forEach(function(tab){
+                if (tab) {
+                    gBrowser.removeTab(tab);
+                }
+            });
+        }// end if tabs
+    }
+};
