@@ -138,7 +138,56 @@ ImageHandlerChrome.Controller = {
         clearAllSavedPathsMenuItem.disabled = (paths.length == 0);
     },
 
-    _
+    _addSavedFolderPath : function(path) {
+
+        this.settings.addSavedFolderPath(path);
+
+        //update UI
+        this._renderSavedFolderPathMenuList();
+    },
+
+    clearAllSavedPaths : function(path) {
+
+        this.settings.clearSavedFolderPaths(path);
+
+        //update UI
+        this._renderSavedFolderPathMenuList();
+    },
+
+    /**
+     * callback function for unloading pick window
+     *
+     * @method unloadPickWindow
+     */
+    unloadPickWindow : function() {
+
+        // save saved folder
+        this._addSavedFolderPath(document.getElementById("savedPathMenulist").value);
+
+        // Remove progress listener from Download Manager if have
+        var dm = Cc["@mozilla.org/download-manager;1"].getService(Ci.nsIDownloadManager);
+
+        // unregister progress listener
+        if (this.progressListener != null) {
+            dm.removeListener(this.progressListener);
+        }
+    },
+
+     onResize : function() {
+
+        if(!this.isResizeToMinWidth){
+            this.isResizeToMinWidth = true;
+            var windowWidth = window.outerWidth;
+            if (windowWidth < this.MIN_WINDOW_WIDTH) {
+                window.sizeToContent();
+                //window.resizeTo(this.MIN_WINDOW_WIDTH, window.outerHeight);
+                ImageHandler.Logger.debug("ResizeToMinWidth: from " + windowWidth + " to " + window.outerWidth);
+            }
+        }
+
+        this.refreshImageContainer();
+     },
+
     /**
      * refresh image container
      *
