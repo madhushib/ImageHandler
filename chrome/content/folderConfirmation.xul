@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/global.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://imagehandler/locale/ImageHandler.dtd">
+
+<dialog xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" id="folderConfirmationDialog"
+    title="&folder_confirmation_dialog.title;" buttons="accept" 
+    style="width:600px;" persist="width height"
+    onload="ImageHandlerChrome.FolderConfirmation.onLoad();"
+    ondialogaccept="return ImageHandlerChrome.FolderConfirmation.onAccept();" ondialogcancel="return ImageHandlerChrome.FolderConfirmation.onCancel();">
+
+    <script type="application/x-javascript" src="chrome://imagehandler/content/common.js" />
+    <script type="application/x-javascript" src="chrome://imagehandler/content/folderConfirmation.js" />
+
+    <vbox styple="margin-bottom: 20px;">
+        <label value="&folder_confirmation_dialog.label;" />
+        <menulist editable="true" flex="1" id="savedFolderMenulist">
+            <menupopup>
+            </menupopup>
+        </menulist>
+        <space flex="1" />
+    </vbox>
+</dialog>
