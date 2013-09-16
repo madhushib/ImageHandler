@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<?xml-stylesheet href="chrome://imagehandler/skin/ip.css" type="text/css"?>
+<!DOCTYPE overlay SYSTEM "chrome://imagehandler/locale/ImageHandler.dtd">
+
+<window id="root-windows" title="&pick_window.title;" xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    persist="width height screenX screenY"
+    onload="ImageHandlerChrome.Controller.loadPickWindow();" onunload="ImageHandlerChrome.Controller.unloadPickWindow();"
+    >
+    <script type="application/x-javascript" src="common.js" />
+    <script type="application/x-javascript" src="images.js" />
+    <script type="application/x-javascript" src="views.js" />
+    <script type="application/x-javascript" src="notification.js" />
+    <script type="application/x-javascript" src="controller.js" />
+
+    <stringbundleset id="stringbundleset">
+        <stringbundle id="ip-string-bundle" src="chrome://imagehandler/locale/ImageHandler.properties" />
+    </stringbundleset>
+
+    <popupset>
+        <menupopup id="context-menu" onpopupshowing="ImageHandlerChrome.Controller.handleOpenContextMenu();">
+            <menuitem label="&pick_contex_menu_select_similar.label;" id="selectSimilarMenuItem" oncommand="ImageHandlerChrome.Controller.selectSimilarImages(document.popupNode);"/>
+            <menuitem label="&pick_contex_menu_select_all.label;" oncommand="ImageHandlerChrome.Controller.selectAllImages();"/>
+            <menuitem label="&pick_contex_menu_unselect_all.label;" oncommand="ImageHandlerChrome.Controller.unselectAllImages();"/>
+        </menupopup>
+    </popupset>
+
+    <vbox>
+        <hbox>
+            <hbox align="center" style="margin-left:10px;">
+                <button type="menu" label="&pick_button_view.label;" id="view-as-button" image="chrome://imagehandler/skin/Pictures.ico">
+                    <menupopup>
+                        <menuitem type="radio" name="thumbnailType" id="thumbnailTypeSmallMI" label="&pick_menu_thumbnails_small.label;"
+                            oncommand="ImageHandlerChrome.Controller.doViewAS();" />
+                        <menuitem type="radio" name="thumbnailType" id="thumbnailTypeNormalMI" label="&pick_menu_thumbnails_normal.label;"
+                            oncommand="ImageHandlerChrome.Controller.doViewAS();" />
+                        <menuitem type="radio" name="thumbnailType" id="thumbnailTypeLargeMI" label="&pick_menu_thumbnails_large.label;"
+                            oncommand="ImageHandlerChrome.Controller.doViewAS();" />
+                        <menuseparator />
+                        <menuitem type="checkbox" id="showImageSizeMI" label="&pick_menu_show_image_size.label;"
+                            oncommand="ImageHandlerChrome.Controller.doViewAS();" />
+                        <menuitem type="checkbox" id="showImageNameMI" label="&pick_menu_show_image_name.label;"
+                            oncommand="ImageHandlerChrome.Controller.doViewAS();" />
+                    </menupopup>
+                </button>
+            </hbox>
+        </hbox>
+    </vbox>
+    <vbox id="imageContainer"
+        style="overflow: auto; background-color: #FFFFFF; margin:5px; border-style: groove; border-width: 1px; border-color: #b9ae9d"
+        persist="height" height="300" align="center" flex="1"
+        context="context-menu" >
+    </vbox>
+    <hbox>
+        <hbox flex="3" align="center">
+            <label value="&pick_saved_directory.label;" />
+            <menulist editable="true"  id="savedPathMenulist" flex="1">
+                <menupopup>
+                    <menuseparator />
+                    <menuitem label="&pick_clear_saved_directories.label;" id="clearAllSavedPathsMenuItem"
+                              oncommand="ImageHandlerChrome.Controller.clearAllSavedPaths();"/>
+                </menupopup>
+            </menulist>
+            <toolbarbutton id="browsedir" oncommand="ImageHandlerChrome.Controller.browseDir();"
+                tooltiptext="&pick_browse.tooltip;" image="chrome://imagehandler/skin/browse.png" />
+        </hbox>
+        <spacer flex="1" />
+        <button label="&pick_button_save.label;" oncommand="ImageHandlerChrome.Controller.doSaveImages();"
+                tooltiptext="&pick_button_save.tooltip;" />
+    </hbox>
+    <statusbar>
+        <statusbarpanel id="filterStat" flex="1" />
+        <statusbarpanel id="downloadStat" flex="1" />
+        <space flex="1" />
+        <toolbarbutton image="chrome://imagehandler/skin/configure-16.png" tooltiptext="&configure_button.tooltip;"
+                       oncommand="ImageHandlerChrome.openOptionsDialog(event)"/>
+        <toolbarbutton image="chrome://imagehandler/skin/help-about-16.png" tooltiptext="&about_button.tooltip;"
+                       oncommand="ImageHandlerChrome.openAboutDialog(event);"/>
+    </statusbar>
+</window>
