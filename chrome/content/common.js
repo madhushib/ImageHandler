@@ -1,10 +1,5 @@
-/*
- * Madhushi Bandara 
- * madhushi@gmail.com
- * SE-project University of Moratuwa
- * Firefox extention for handle, select and save images from web content.
- * Image handler v1.0
- * 
+/**
+ * ImageHandlerChrome namespace.
  */
 if ("undefined" == typeof (ImageHandlerChrome)) {
 
@@ -30,18 +25,18 @@ if ("undefined" == typeof (ImageHandlerChrome)) {
      * Installs the toolbar button with the given ID into the given
      * toolbar, if it is not already present in the document.
      *
+     * @param {string} toolbarId The ID of the toolbar to install to.
+     * @param {string} id The ID of the button to install.
+     * @param {bool} isShow The flag indicate this button install or not
      */
     ImageHandlerChrome.installButton = function(toolbarId, id, isShow) {
-    	//initialize window components
     	var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
     	var mainWindow = wm.getMostRecentWindow("navigator:browser");
     	var document = mainWindow.document;
 
-    	//initialize toolbar and button variables
         var toolbar = document.getElementById(toolbarId);
     	var button = document.getElementById(id);
 
-    	//If button is initialize and not showing
         if (!button && isShow) {
             toolbar.insertItem(id, null);
             toolbar.setAttribute("currentset", toolbar.currentSet);
@@ -49,9 +44,7 @@ if ("undefined" == typeof (ImageHandlerChrome)) {
             if (toolbarId == "addon-bar"){
                 toolbar.collapsed = false;
             }
-        } 
-        //Button is initialize and not showing
-        else if(!isShow){
+        } else if(!isShow){
             // get toolbar's currentset and remove all instances of your button if already stored
             var pattern = new RegExp(id + ",?", "gi");
             var newCurrentset = toolbar.currentSet.replace(pattern,"");
@@ -67,7 +60,6 @@ if ("undefined" == typeof (ImageHandlerChrome)) {
         }
     };
 
-    //get privacy info private browsing etc
     ImageHandlerChrome.getPrivacyInfo = function() {
 
         // get privacy context
