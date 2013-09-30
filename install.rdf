@@ -3,13 +3,13 @@
          xmlns:NC="http://home.netscape.com/NC-rdf#"
          xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 <RDF:Description RDF:about="urn:mozilla:install-manifest">
-    <em:id>imagepicker@rama.org</em:id>
+    <em:id>ImageHandler@rama.org</em:id>
     <em:name>Image Handler</em:name>
-    <em:description>Extract,select, save and manage multiple images from web browser.</em:description>
+    <em:description>Manage and save images</em:description>
     <em:version>1.0</em:version>
     <em:type>2</em:type> <!-- 2 : Extensions -->
     <em:optionsURL>chrome://imagehandler/content/options.xul</em:optionsURL>
-    <em:iconURL>chrome://imagehandler/skin/img-picker_24.png</em:iconURL>
+    <em:iconURL>chrome://imagehandler/skin/img-handler_24.png</em:iconURL>
     <em:creator>Madhushi Bandara</em:creator>
     <em:unpack>true</em:unpack>
 
@@ -21,6 +21,7 @@
             <em:maxVersion>23.*</em:maxVersion>
         </RDF:Description>
     </em:targetApplication>
+
 
 </RDF:Description>
 </RDF:RDF>

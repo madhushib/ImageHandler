@@ -34,7 +34,7 @@ ImageHandlerChrome.Notification.prototype = {
 
         try {
             var alertsService = Cc["@mozilla.org/alerts-service;1"].getService(Ci.nsIAlertsService);
-            alertsService.showAlertNotification("chrome://imagehandler/skin/img-picker_32.png", this.title,
+            alertsService.showAlertNotification("chrome://imagehandler/skin/img-handler_32.png", this.title,
                     this.savedFolderPath, true, this.savedFolderPath, alertListener, "ImageHandlerAlert");
             //abcefg.throwEx();
         } catch (ex) {
