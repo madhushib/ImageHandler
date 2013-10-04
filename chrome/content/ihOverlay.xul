@@ -19,6 +19,8 @@
             <menupopup id="image-pick-button-popup" onpopupshowing="ImageHandlerChrome.onPopupMenuShowing(event);">
                 <menuitem id="ipbtn-menuall" label="&toolbarbutton_pick_images.menuitem.alltabs;" oncommand="ImageHandlerChrome.pickImagesFromAllTabs(event);"
                     class="menuitem-iconic ip-button-all" />
+                <menuitem id="ipbtn-fav" label="&toolbarbutton_pick_images.menuitem.fav;" oncommand="ImageHandlerChrome.pickImagesFromFav(event);"
+                    class="menuitem-iconic ip-button-all" />
                 <menuseparator id="ipbtn-menuseparator" />
                 <menuitem id="ipbtn-menu-configure" label="&configure_button.label;" oncommand="ImageHandlerChrome.openOptionsDialog(event);"
                     class="menuitem-iconic configure-menu-item" />

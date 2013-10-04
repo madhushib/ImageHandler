@@ -4,8 +4,8 @@
 <!ENTITY toolbarbutton_pick_images_simple.tooltip "Pick images from current tab">
 <!ENTITY toolbarbutton_pick_images.menuitem.currenttab "Pick images from current tab">
 <!ENTITY toolbarbutton_pick_images.menuitem.alltabs "Pick images from all tabs">
-<!ENTITY toolbarbutton_pick_images.menuitem.righttabs "Pick images from right tabs">
-<!ENTITY toolbarbutton_pick_images.menuitem.lefttabs "Pick images from left tabs">
+<!ENTITY toolbarbutton_pick_images.menuitem.fav "Favorite">
+
 
 <!ENTITY menu_pick_images.label "Pick Images">
 

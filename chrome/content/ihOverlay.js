@@ -2,6 +2,9 @@ Components.utils.import("resource://imagehandler/common.js");
 Components.utils.import("resource://imagehandler/model.js");
 Components.utils.import("resource://imagehandler/settings.js");
 
+Components.utils.import("resource://gre/modules/NetUtil.jsm");
+Components.utils.import("resource://gre/modules/FileUtils.jsm");
+
 ImageHandlerChrome.init = function(){
 
 	   var buttonNames = ["ipbutton-simple", "ipbutton-all", "ipbutton-left", "ipbutton-right", "ipbuttons"];
@@ -96,6 +99,51 @@ ImageHandlerChrome.pickImagesFromAllTabs = function(event){
 
     // Pick image
     ImageHandlerChrome.pickImages(tabs, currentTabTitle);
+};
+
+
+ImageHandlerChrome.pickImagesFromFav = function(event){
+
+    event.stopPropagation();
+    
+    var imageList = new Array();
+    var imageInfoList = new Array();
+    
+    var file = FileUtils.getFile("ProfD", ["dataaab.txt"]);
+	NetUtil.asyncFetch(file, function(inputStream, status) {
+		  if (!Components.isSuccessCode(status)) {
+		    alert("errror read")
+		    return;
+		  }
+		  dataa = NetUtil.readInputStreamToString(inputStream, inputStream.available());
+		});
+	imageList = JSON.parse(dataa);
+	
+	var currentImageList = new Array();
+	
+	for(var i = 0 ; i < imageList.length ; i++){
+		var elem = new Image();
+		elem.src = imageList[i].url;
+		elem.height = imageList[i].height;
+		elem.width = imageList[i].width;
+		elem.id = imageList[i].id;
+		currentImageList.push(elem);
+	}
+	imageInfoList = imageInfoList.concat(ImageHandlerChrome.convertAndTidyImage(currentImageList));
+	var title = "My Favorites";
+	var currentTab = ImageHandlerChrome.getCurrentTab();
+    var tabs = [currentTab];
+	var listeners = [new ImageHandlerChrome.CloseTabListener(tabs)];
+    var params = {
+            "imageList": imageInfoList,
+            "title": title,
+            "listeners": listeners,
+            "browser": gBrowser.selectedBrowser,
+            "popupNotifications": PopupNotifications
+        };
+        var mainWindow = window.openDialog("chrome://imagehandler/content/pick.xul", "PickImage.mainWindow", "chrome,centerscreen,resizable, dialog=no, modal=no, dependent=no,status=yes", params);
+        mainWindow.focus();
+
 };
 
 ImageHandlerChrome.pickImagesFromTabs = function(event, tabTitle){
