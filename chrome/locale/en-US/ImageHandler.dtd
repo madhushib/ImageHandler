@@ -70,6 +70,8 @@
 <!ENTITY configure_button.label "Configure">
 <!ENTITY configure_button.tooltip "Configure">
 <!ENTITY about_button.tooltip "About Image Picker">
+<!ENTITY markall_button.label "Mark All">
+<!ENTITY unmarkall_button.label "Unmark All">
 
 <!ENTITY pick_contex_menu_select_similar.label "Select Similar">
 <!ENTITY pick_contex_menu_select_all.label "Select All">

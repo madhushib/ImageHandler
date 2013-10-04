@@ -279,7 +279,7 @@ ImageHandlerChrome.Controller = {
         }
     },
     
-    addrem:function(old,current){
+    addrem:function(old){
     	
     	var type = window.arguments[0].type;
     	
@@ -296,14 +296,62 @@ ImageHandlerChrome.Controller = {
         }
         
         var converted = JSON.parse(JSON.stringify(selected));
+    	var currentList = new Array();
+    	var imageListTemp = new Array();
         
         if(type == "fav"){
-        	
+        	for(var i = 0 ; i < old.length ; i++){
+        		var state = false;
+        		for(var j = 0 ; j < converted.length ; j++){
+        			if(old[i].url==converted[j].url){
+        				state = true;
+        			}
+        		}
+        		if(state == false){
+        			currentList.push(old[i]);
+        		}
+        	}
+        	for(var i = 0 ; i < this.imageList.length ; i++){
+        		var state = false;
+        		for(var j = 0 ; j < converted.length ; j++){
+        			if(this.imageList[i].url==converted[j].url){
+        				state = true;
+        			}
+        		}
+        		if(state == false){
+        			imageListTemp.push(this.imageList[i]);
+        		}
+        	}
+        	this.imageList = imageListTemp;
         }
         else{
-        	old = old.concat(converted);
-        	alert(JSON.stringify(old));
+        	currentList = old.concat(converted);
+        	alert("Added to Favorite");
         }
+    	this.resetfav(currentList);
+    },
+    
+    resetfav : function(favImages){
+    	var JSONfoo = JSON.stringify(favImages);
+    	var file = FileUtils.getFile("ProfD", ["dataaab.txt"]);
+    	var ostream = FileUtils.openSafeFileOutputStream(file)
+
+    	var converter = Components.classes["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(Components.interfaces.nsIScriptableUnicodeConverter);
+    	converter.charset = "UTF-8";
+    	var istream = converter.convertToInputStream(JSONfoo);
+
+    	// The last argument (the callback) is optional.
+    	NetUtil.asyncCopy(istream, ostream, function(status) {
+    	  if (!Components.isSuccessCode(status)) {
+    	    alert("Failed writing");
+    	    return;
+    	  }
+    	  //alert("Suceeded writing");
+    	});
+    	
+    	this.refreshImageContainer();
+
+        this.updateStatuBar();
     },
 
     /**

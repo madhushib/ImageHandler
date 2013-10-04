@@ -44,6 +44,8 @@
                             oncommand="ImageHandlerChrome.Controller.doViewAS();" />
                     </menupopup>
                 </button>
+                <button id = "markall" label="&markall_button.label;" oncommand = "ImageHandlerChrome.Controller.selectAllImages();"/>
+                <button id = "unmarkall" label="&unmarkall_button.label;" oncommand = "ImageHandlerChrome.Controller.unselectAllImages();"/>                
                 <button label="" id="add-to-fav" oncommand="ImageHandlerChrome.Controller.addRemoveFav();"/>
             </hbox>
         </hbox>
