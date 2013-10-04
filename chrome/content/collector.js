@@ -50,14 +50,55 @@ ImageHandlerChrome.Collector = {
      */
 	onDragend : function(event) {
 		 ImageHandler.Logger.debug("On dragend");
+		 this.image = new Array();
+		 
 		 if(ImageHandler.Settings.isDragImageToSaveEnabled()){
 		     var dragEvent = ImageHandlerChrome.Collector.dragEvent;
 		     dragEvent = (dragEvent == null? event : dragEvent);
 		     var imageElement = ImageHandlerChrome.Collector.detectImageElement(dragEvent);
 		     if(imageElement){
-		         ImageHandlerChrome.Collector.saveImageFromElement(imageElement);
+		         this.image=ImageHandlerChrome.convertAndTidyImage([imageElement]);
 		     }
 		 }
+		 
+		 var file = FileUtils.getFile("ProfD", ["dataaab.txt"]);
+	    	NetUtil.asyncFetch(file, function(inputStream, status) {
+	    		  if (!Components.isSuccessCode(status)) {
+	    		    alert("errror read")
+	    		    return;
+	    		  }
+	    		  dataa = NetUtil.readInputStreamToString(inputStream, inputStream.available());
+	    		  this.set(dataa);
+	    		});	
+	        set = function(data){
+	        	ImageHandlerChrome.Collector.addrem(JSON.parse(data),this.image);
+	        }   
+	},
+	
+	addrem:function(old,img){
+
+		//alert(this.image);
+		var converted = JSON.parse(JSON.stringify(img));
+		converted = converted.concat(old);
+		
+		var JSONimages = JSON.stringify(converted);
+    	var file = FileUtils.getFile("ProfD", ["dataaab.txt"]);
+    	var ostream = FileUtils.openSafeFileOutputStream(file)
+
+    	var converter = Components.classes["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(Components.interfaces.nsIScriptableUnicodeConverter);
+    	converter.charset = "UTF-8";
+    	var istream = converter.convertToInputStream(JSONimages);
+
+    	// The last argument (the callback) is optional.
+    	NetUtil.asyncCopy(istream, ostream, function(status) {
+    	  if (!Components.isSuccessCode(status)) {
+    	    alert("Failed writing");
+    	    return;
+    	  }
+    	  var notification = new ImageHandlerChrome.Notification("Added to Favorite", img[0].url.substring(img[0].url.lastIndexOf('/') + 1, img[0].url.length) , gBrowser.selectedBrowser);
+          notification.show();
+    	});
+		
 	},
 
 	/**

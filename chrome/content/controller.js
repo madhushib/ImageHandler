@@ -265,7 +265,6 @@ ImageHandlerChrome.Controller = {
     
     addRemoveFav : function(){  	
         var file = FileUtils.getFile("ProfD", ["dataaab.txt"]);
-        ImageHandlerChrome.Controller.dataa = "nothing";
     	NetUtil.asyncFetch(file, function(inputStream, status) {
     		  if (!Components.isSuccessCode(status)) {
     		    alert("errror read")
@@ -326,19 +325,19 @@ ImageHandlerChrome.Controller = {
         }
         else{
         	currentList = old.concat(converted);
-        	alert("Added to Favorite");
+        	alert("Added to Favorites");
         }
     	this.resetfav(currentList);
     },
     
     resetfav : function(favImages){
-    	var JSONfoo = JSON.stringify(favImages);
+    	var JSONimages = JSON.stringify(favImages);
     	var file = FileUtils.getFile("ProfD", ["dataaab.txt"]);
     	var ostream = FileUtils.openSafeFileOutputStream(file)
 
     	var converter = Components.classes["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(Components.interfaces.nsIScriptableUnicodeConverter);
     	converter.charset = "UTF-8";
-    	var istream = converter.convertToInputStream(JSONfoo);
+    	var istream = converter.convertToInputStream(JSONimages);
 
     	// The last argument (the callback) is optional.
     	NetUtil.asyncCopy(istream, ostream, function(status) {

@@ -8,6 +8,7 @@
     <script type="application/x-javascript" src="chrome://imagehandler/content/ihOverlay.js" />
     <script type="application/x-javascript" src="chrome://imagehandler/content/notification.js" />
     <script type="application/x-javascript" src="chrome://imagehandler/content/collector.js" />
+    <script type="application/x-javascript" src="chrome://imagehandler/content/controller.js" />
 
     <stringbundleset id="stringbundleset">
         <stringbundle id="ip-string-bundle" src="chrome://imagehandler/locale/ImageHandler.properties" />
