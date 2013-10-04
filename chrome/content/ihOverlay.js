@@ -106,9 +106,6 @@ ImageHandlerChrome.pickImagesFromFav = function(event){
 
     event.stopPropagation();
     
-    var imageList = new Array();
-    var imageInfoList = new Array();
-    
     var file = FileUtils.getFile("ProfD", ["dataaab.txt"]);
 	NetUtil.asyncFetch(file, function(inputStream, status) {
 		  if (!Components.isSuccessCode(status)) {
@@ -116,8 +113,15 @@ ImageHandlerChrome.pickImagesFromFav = function(event){
 		    return;
 		  }
 		  dataa = NetUtil.readInputStreamToString(inputStream, inputStream.available());
-		});
-	imageList = JSON.parse(dataa);
+		  ImageHandlerChrome.setFavWindow(dataa);
+		});	
+};
+
+ImageHandlerChrome.setFavWindow = function(data){
+	var imageList = new Array();
+    var imageInfoList = new Array();
+	
+	imageList = JSON.parse(data);
 	
 	var currentImageList = new Array();
 	
@@ -134,7 +138,9 @@ ImageHandlerChrome.pickImagesFromFav = function(event){
 	var currentTab = ImageHandlerChrome.getCurrentTab();
     var tabs = [currentTab];
 	var listeners = [new ImageHandlerChrome.CloseTabListener(tabs)];
+	var type = "fav";
     var params = {
+    		"type":type,
             "imageList": imageInfoList,
             "title": title,
             "listeners": listeners,
@@ -144,7 +150,7 @@ ImageHandlerChrome.pickImagesFromFav = function(event){
         var mainWindow = window.openDialog("chrome://imagehandler/content/pick.xul", "PickImage.mainWindow", "chrome,centerscreen,resizable, dialog=no, modal=no, dependent=no,status=yes", params);
         mainWindow.focus();
 
-};
+}
 
 ImageHandlerChrome.pickImagesFromTabs = function(event, tabTitle){
 
@@ -206,9 +212,11 @@ ImageHandlerChrome.pickImages = function(tabs, title){
 
     // Collect tabs to be closed after saved images
     var listeners = [new ImageHandlerChrome.CloseTabListener(tabs)];
+    var type = "nfav";
 
     // Prepare parameters
     var params = {
+    	"type":type,
         "imageList": imageInfoList,
         "title": title,
         "listeners": listeners,

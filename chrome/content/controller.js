@@ -10,6 +10,9 @@ Components.utils.import("resource://imagehandler/model.js");
 Components.utils.import("resource://imagehandler/filters.js");
 Components.utils.import("resource://imagehandler/download.js");
 
+Components.utils.import("resource://gre/modules/NetUtil.jsm");
+Components.utils.import("resource://gre/modules/FileUtils.jsm");
+
 /**
  * Provides the controller
  *
@@ -93,6 +96,14 @@ ImageHandlerChrome.Controller = {
 
         // init window title
         window.document.title = window.arguments[0].title;
+        var type = window.arguments[0].type;
+        
+        if(type == "fav"){
+        	document.getElementById("add-to-fav").label = "Remove From Favorite";
+        }
+        else{
+        	document.getElementById("add-to-fav").label = "Add to Favorite";
+        }
 
         var isShowImageSize = this.settings.isShowImageSize();
         var isShowImageName = this.settings.isShowImageName();
@@ -250,6 +261,49 @@ ImageHandlerChrome.Controller = {
 
         // refresh image container
         this.refreshImageContainer();
+    },
+    
+    addRemoveFav : function(){  	
+        var file = FileUtils.getFile("ProfD", ["dataaab.txt"]);
+        ImageHandlerChrome.Controller.dataa = "nothing";
+    	NetUtil.asyncFetch(file, function(inputStream, status) {
+    		  if (!Components.isSuccessCode(status)) {
+    		    alert("errror read")
+    		    return;
+    		  }
+    		  dataa = NetUtil.readInputStreamToString(inputStream, inputStream.available());
+    		  this.set(dataa);
+    		});	
+        set = function(data){
+        	ImageHandlerChrome.Controller.addrem(JSON.parse(data));
+        }
+    },
+    
+    addrem:function(old,current){
+    	
+    	var type = window.arguments[0].type;
+    	
+    	var selected = new Array();
+        for ( var i = 0; i < this.imageList.length; i++) {
+            var img = this.imageList[i];
+            if (this.selectedMap.get(img.id) == true) { // saved selected image only
+                selected.push(img);
+            }
+        }
+
+        if(selected.length == 0){
+           return;
+        }
+        
+        var converted = JSON.parse(JSON.stringify(selected));
+        
+        if(type == "fav"){
+        	
+        }
+        else{
+        	old = old.concat(converted);
+        	alert(JSON.stringify(old));
+        }
     },
 
     /**
