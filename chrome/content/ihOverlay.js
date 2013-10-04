@@ -11,7 +11,7 @@ ImageHandlerChrome.init = function(){
 
 	   // Add buttons to toolbar on first run
 	   Application.getExtensions(function (extensions) {
-            let extension = extensions.get("ImageHandler@topolog.org");
+            let extension = extensions.get("ImageHandler@rama.org");
             ImageHandler.Logger.info("First run: " + extension.firstRun);
             if (extension.firstRun) {
             	ImageHandler.Logger.info("Installing button on first run.");
@@ -21,6 +21,25 @@ ImageHandlerChrome.init = function(){
     		    	ImageHandlerChrome.installButton("nav-bar", buttonId, isShow);
 	    		    ImageHandler.Logger.debug("Installed button: " + buttonId + " to toolbar, isShow="+isShow);
 	    		});
+    	    	
+    	    	
+    	    	var JSONimages = JSON.stringify(new Array());
+    	    	var file = FileUtils.getFile("ProfD", ["dataaab.txt"]);
+    	    	var ostream = FileUtils.openSafeFileOutputStream(file)
+
+    	    	var converter = Components.classes["@mozilla.org/intl/scriptableunicodeconverter"].createInstance(Components.interfaces.nsIScriptableUnicodeConverter);
+    	    	converter.charset = "UTF-8";
+    	    	var istream = converter.convertToInputStream(JSONimages);
+
+    	    	// The last argument (the callback) is optional.
+    	    	NetUtil.asyncCopy(istream, ostream, function(status) {
+    	    	  if (!Components.isSuccessCode(status)) {
+    	    	    alert("Failed writing");
+    	    	    return;
+    	    	  }
+    	    	  //alert("Suceeded writing");
+    	    	});
+    	    	
             }
        });
 
@@ -109,8 +128,7 @@ ImageHandlerChrome.pickImagesFromFav = function(event){
     var file = FileUtils.getFile("ProfD", ["dataaab.txt"]);
 	NetUtil.asyncFetch(file, function(inputStream, status) {
 		  if (!Components.isSuccessCode(status)) {
-		    alert("errror read")
-		    return;
+			  alert("Unexpected Error Occured!");
 		  }
 		  dataa = NetUtil.readInputStreamToString(inputStream, inputStream.available());
 		  ImageHandlerChrome.setFavWindow(dataa);

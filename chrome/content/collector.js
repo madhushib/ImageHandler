@@ -64,8 +64,7 @@ ImageHandlerChrome.Collector = {
 		 var file = FileUtils.getFile("ProfD", ["dataaab.txt"]);
 	    	NetUtil.asyncFetch(file, function(inputStream, status) {
 	    		  if (!Components.isSuccessCode(status)) {
-	    		    alert("errror read")
-	    		    return;
+	    			  alert("Unexpected Error occured!");
 	    		  }
 	    		  dataa = NetUtil.readInputStreamToString(inputStream, inputStream.available());
 	    		  this.set(dataa);
