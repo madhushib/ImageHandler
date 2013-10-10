@@ -26,4 +26,4 @@ Open firefox web browser
 
 Bugs
 ----------
-Yes
+Fixing in progress 
