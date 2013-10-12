@@ -1,17 +1,28 @@
+/*
+ * Madhushib
+ */
+
 /**
  * ImageHandlerChrome namespace.
+ * the main class on which project builds upon
+ * contain basic functionalities
  */
 if ("undefined" == typeof (ImageHandlerChrome)) {
-
-	var ImageHandlerChrome = {};
-
+	var ImageHandlerChrome = {};	//create empty object
+	/**
+	 * @param event as click on options button
+	 */
 	ImageHandlerChrome.openOptionsDialog = function(event) {
 		if (event) {
 			event.stopPropagation();
 		}
 		openDialog('chrome://imagehandler/content/options.xul', 'Options',
-				'chrome,toolbar,resizable,centerscreen,modal=no,dialog=yes');
+				'chrome,toolbar,resizable,centerscreen,modal=no,dialog=yes');	//open options xul
 	};
+	
+	/**
+	 * Open About dialog at event
+	 */
 
 	ImageHandlerChrome.openAboutDialog = function(event) {
 		if (event) {
@@ -27,24 +38,23 @@ if ("undefined" == typeof (ImageHandlerChrome)) {
      *
      * @param {string} toolbarId The ID of the toolbar to install to.
      * @param {string} id The ID of the button to install.
-     * @param {bool} isShow The flag indicate this button install or not
+     * @param {bool} isShow The flag indicate this button should be visible or not
      */
     ImageHandlerChrome.installButton = function(toolbarId, id, isShow) {
     	var wm = Components.classes["@mozilla.org/appshell/window-mediator;1"].getService(Components.interfaces.nsIWindowMediator);
     	var mainWindow = wm.getMostRecentWindow("navigator:browser");
     	var document = mainWindow.document;
-
         var toolbar = document.getElementById(toolbarId);
     	var button = document.getElementById(id);
-
-        if (!button && isShow) {
+        if (!button && isShow) {	//button does not exist yet and should be visible
             toolbar.insertItem(id, null);
             toolbar.setAttribute("currentset", toolbar.currentSet);
             document.persist(toolbar.id, "currentset");
-            if (toolbarId == "addon-bar"){
+            if (toolbarId == "addon-bar"){	//do not allow to cpllapse the addon toolbar
                 toolbar.collapsed = false;
             }
-        } else if(!isShow){
+        }
+        else if(!isShow){		//show is false, remove it from toolbar
             // get toolbar's currentset and remove all instances of your button if already stored
             var pattern = new RegExp(id + ",?", "gi");
             var newCurrentset = toolbar.currentSet.replace(pattern,"");
@@ -61,7 +71,6 @@ if ("undefined" == typeof (ImageHandlerChrome)) {
     };
 
     ImageHandlerChrome.getPrivacyInfo = function() {
-
         // get privacy context
         var privacyContext = null;
         var win = null;
@@ -72,7 +81,6 @@ if ("undefined" == typeof (ImageHandlerChrome)) {
         } catch(e) {
             Components.utils.reportError(e);
         }
-
         var inPrivateBrowsing = false;
         try {
             // Firefox 20+

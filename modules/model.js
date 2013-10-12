@@ -18,7 +18,7 @@ Cu.import("resource://imagehandler/common.js");
  * @param {HTMLElement}
  *            image element
  * @param {Number}
- *            the top of image (absolute position)     
+ *            the top of image (absolute position)  to sort images to be shown in the container 
  */
 ImageHandler.ImageInfo = function(id, image, imageTop) {
 

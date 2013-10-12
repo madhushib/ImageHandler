@@ -39,32 +39,6 @@ toolbar[iconsize ="small"] #ipbutton-all-toolbar {
     list-style-image: url("chrome://imagehandler/skin/img-handler-all_16.png");
 }
 
-/* ip-button-right css */
-#ipbutton-right-toolbar {
-    list-style-image: url("chrome://imagehandler/skin/img-handler-right_24.png");
-}
-
-toolbar[iconsize ="small"] #ipbutton-right-toolbar {
-    list-style-image: url("chrome://imagehandler/skin/img-handler-right_16.png");
-}
-
-.ip-button-right {
-    list-style-image: url("chrome://imagehandler/skin/img-handler-right_16.png");
-}
-
-/* ip-button-left css */
-#ipbutton-left-toolbar {
-    list-style-image: url("chrome://imagehandler/skin/img-handler-left_24.png");
-}
-
-toolbar[iconsize ="small"] #ipbutton-left-toolbar {
-    list-style-image: url("chrome://imagehandler/skin/img-handler-left_16.png");
-}
-
-.ip-button-left {
-    list-style-image: url("chrome://imagehandler/skin/img-handler-left_16.png");
-}
-
 /* dynamic menu item css */
 .dynamic-pick-menu-item {
     list-style-image: url("chrome://imagehandler/skin/light_16.png");

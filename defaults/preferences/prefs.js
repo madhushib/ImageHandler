@@ -18,8 +18,6 @@ pref('extensions.imagehandler.ui.ipbutton-all.toolbar.show', false);
 pref('extensions.imagehandler.ui.ipbutton-all.contextmenu.show', false);
 pref('extensions.imagehandler.ui.ipbutton-right.toolbar.show', false);
 pref('extensions.imagehandler.ui.ipbutton-right.contextmenu.show', false);
-pref('extensions.imagehandler.ui.ipbutton-left.toolbar.show', false);
-pref('extensions.imagehandler.ui.ipbutton-left.contextmenu.show', false);
 
 pref('extensions.imagehandler.collector.doubleclickImageToSave.enable', true);
 pref('extensions.imagehandler.collector.dragImageToSave.enable', true);

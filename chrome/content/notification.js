@@ -1,13 +1,24 @@
+/*
+ * madhushib
+ */
 Components.utils.import("resource://imagehandler/common.js");
 Components.utils.import("resource://imagehandler/fileUtils.js");
 Components.utils.import("resource://gre/modules/PopupNotifications.jsm");
 
 /**
  * Notification class
- *
+ * Handle all notifications 
  * @namespace Notification
  * @class ImageHandlerChrome.Notification
  * @constructor
+ */
+
+/**
+ * Notify on the saved folder path
+ * @param {} title
+ * @param {} savedFolderPath
+ * @param {} browser
+ * @param {} popupNotificationsSvc
  */
 ImageHandlerChrome.Notification = function(title, savedFolderPath, browser, popupNotificationsSvc) {
     this.title = title;
@@ -45,15 +56,6 @@ ImageHandlerChrome.Notification.prototype = {
                 var dir = fileUtils.toDirectory(filePath);
                 fileUtils.revealDirectory(dir);
             };
-
-            var notification = this.popupNotificationsSvc.show(this.browser, /* browser */
-            "ImageHandlerAlert", this.title, null, /* anchor ID */
-            {
-                label : "Open",
-                accessKey : "O",
-                callback : openAction
-            }, null /* secondary action */
-            );
 
             setTimeout(function() {
                 notification.remove();

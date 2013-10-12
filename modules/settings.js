@@ -97,6 +97,7 @@ ImageHandler.Settings =  {
         return this._prefs.setBoolPref("filter.skipImageTypes.gif", isSkip);
     },
 
+    //get list of folders of images to be saved from preference and return a list of them
     getSavedFolderPaths: function(){
 
         var pathList = this.getUnicodeChar(this._prefs, "savedFolderPathList");

@@ -17,8 +17,7 @@ ImageHandler.FileUtils = {
 
     /**
      * Attempt to open the given nsIFile directory with Finder/Explorer/Whatever properties.
-     *
-     * @method revealDirectory
+     *     * @method revealDirectory
      * @param {nsIFile}
      *            directory The directory to open.
      */
@@ -44,8 +43,7 @@ ImageHandler.FileUtils = {
     },
 
     /**
-     * Convert the path to nsILocalFile object. Attempt to create a directory for the given path if it is a nonexistent
-     * directory.
+     * Convert the path to nsILocalFile object. Attempt to create a directory for the given path do not exist
      *
      * @method toDirectory
      * @param {String}
@@ -53,27 +51,21 @@ ImageHandler.FileUtils = {
      * @return {nsILocalFile} the nsILocalFile representing the directory for the given path
      */
     toDirectory : function(path) {
-
-        // check argument
-        if ((path == null) || (path.length == 0)) {
+          if ((path == null) || (path.length == 0)) {
             return null;
         }
-
         // create directory
-        var directory = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsILocalFile);
-
+       var directory = Cc["@mozilla.org/file/local;1"].createInstance(Ci.nsILocalFile);
         try {
             directory.initWithPath(path);
             if (!directory.exists()) {
                 directory.create(Ci.nsIFile.DIRECTORY_TYPE, 0755);
             }
-
             return directory;
         } catch (e) {
             ImageHandler.Logger.warn("Cannot convert path: " + path + " to directory. ", e);
             return null;
         }
-
         return null;
     },
 

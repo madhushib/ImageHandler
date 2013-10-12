@@ -19,8 +19,8 @@
 	</RDF:Seq>
 
 	<RDF:Description RDF:about="urn:mozilla:package:imagehandler"
-		chrome:displayName="Image Picker"
-		chrome:author="Wesley Chen"
+		chrome:displayName="Image Handler"
+		chrome:author="Madhusib"
 		chrome:name="imagehandler"
 		chrome:extension="true"
 		chrome:description="Extract, manage and save multiple image contents from web pages.">
